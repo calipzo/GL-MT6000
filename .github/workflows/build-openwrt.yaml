@@ -16,7 +16,7 @@ env:
   WANTEDVERSION: IPv4
   REMOTE_REPOSITORY: pesa1234/openwrt
   CONFIG_FILE: mt6000.config
-  GH_TOKEN: ${{ github.token }}
+  GH_TOKEN: ${{ secrets.MY_GH_PAT }}
 
 jobs:
   check_commits:
