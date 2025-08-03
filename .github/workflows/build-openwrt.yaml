@@ -6,22 +6,22 @@ permissions:
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-  schedule:
-    - cron: "38 3 * * *"
+#  push:
+#    branches:
+#      - main
+#  schedule:
+#    - cron: "38 3 * * *"
 
 env:
   WANTEDVERSION: IPv4
   REMOTE_REPOSITORY: pesa1234/openwrt
   CONFIG_FILE: mt6000.config
-  GH_TOKEN: ${{ secrets.MY_GH_PAT }}
+  GH_TOKEN: ${{ github.token }}
 
 jobs:
   check_commits:
     name: Check for new commits
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-24.04
     outputs:
       remote_branch: ${{ steps.check_commits.outputs.remote_branch }}
       release_prefix: ${{ steps.check_commits.outputs.release_prefix }}
@@ -43,7 +43,7 @@ jobs:
     name: Build OpenWrt
     needs: check_commits
     if: github.event_name == 'workflow_dispatch' || needs.check_commits.outputs.new_commits == 'true'
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-24.04
     steps:
       - name: Install dependencies
         run: |
